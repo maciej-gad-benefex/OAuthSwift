@@ -48,6 +48,9 @@ open class OAuthSwift: NSObject, OAuthSwiftRequestHandle {
     }
 
     func observeCallback(_ block: @escaping (_ url: URL) -> Void) {
+        if let oldObserver = observer {
+            OAuthSwift.notificationCenter.removeObserver(oldObserver)
+        }
         self.observer = OAuthSwift.notificationCenter.addObserver(
             forName: OAuthSwift.didHandleCallbackURL,
             object: nil,
